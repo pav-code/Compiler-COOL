@@ -22,6 +22,24 @@
 + Test the lexer on a source file. Outputs the tokenized lexemes:<br/>
 `./lexer test.cl`
 
+# Parser
+
+# Semantic Analyzer
++ The semantic analyzer uses the abstract syntax tree (AST) from the parser to check for erroneous programs.
++ Looks at all classes and builds an inheritance graph
++ Checks if the graph is well-formed
++ In each class:
+    + Gather all declarations in a symbol table traversing the AST
+    + Check each expression for type correctness
+    + Annotate the AST with types
+    
++ Import all the tools needed for later compilation:<br/>
+`make -f /usr/class/cs143/assignments/PA4/Makefile`
++ Build the semantic analyzer from the C++ code:<br/>
+`make semant`
++ Test on a COOL file:<br/>
+`./mysemant bad.cl`
+
 # Version of tools
 flex: `2.5.4`  
 bison: `3.5.1`  
