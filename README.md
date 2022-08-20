@@ -23,7 +23,10 @@
 `./lexer test.cl`
 
 # Version of tools
-`flex version 2.5.4`
+flex: `2.5.4`  
+bison: `3.5.1`
+g++: `9.4.0`  
+os: `ubuntu 20.04`
 
 # References
 Needed flex-old to compile lexer:
