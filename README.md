@@ -40,6 +40,8 @@
 + Test on a COOL file:<br/>
 `./mysemant bad.cl`
 
+# Code Generator
+
 # Version of tools
 flex: `2.5.4`  
 bison: `3.5.1`  
