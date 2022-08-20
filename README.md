@@ -1,14 +1,6 @@
 # Compiler-COOL
 
-# Lexer
-Needed flex-old to compile lexer:
-https://stackoverflow.com/questions/34782625/undefined-reference-to-yylex
-
-Compiler Tools from the Stanford Virtual Machine:
-https://github.com/frevib/stanford-compilers-course-material
-
-flex version 2.5.4
-
+# Setup Tools Environment 
 + Flex, Bison and Make <br/>
 `sudo apt-get install flex-old bison build-essential csh libxaw7-dev`
 
@@ -22,3 +14,20 @@ flex version 2.5.4
 + In the terminal that will be used to compile the Lexer, Parser, Semantic analyzer and Code generator<br/>
 `PATH=/usr/class/cs143/cool/bin:$PATH`
 
+# Lexer
++ Lexical specification file:<br/>
+`cool.flex`
++ Run Flex to generate cool-lex.cc and use the Makefile to compile the Lexer binary:<br/>
+`make -f /usr/class/cs143/assignments/PA2/Makefile`
++ Test the lexer on a source file. Outputs the tokenized lexemes:<br/>
+`./lexer test.cl`
+
+# Version of tools
+`flex version 2.5.4`
+
+# References
+Needed flex-old to compile lexer:
+https://stackoverflow.com/questions/34782625/undefined-reference-to-yylex
+
+Compiler Tools from the Stanford Virtual Machine:
+https://github.com/frevib/stanford-compilers-course-material
