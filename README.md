@@ -46,6 +46,7 @@
 flex: `2.5.4`  
 bison: `3.5.1`  
 g++: `9.4.0`  
+spim: `6.5`  
 os: `ubuntu 20.04`
 
 # References
