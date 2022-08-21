@@ -1,7 +1,22 @@
 /*
  *  The scanner definition for COOL.
  * FIX: Length of string errors, proper implementation required
- */
+ * Weird Behaviour Requirements, and confusing implementations:
+ * COMMENT_Type1: a comment of the type "--" until the end of the line.
+ *  Starts on: "--" (LN:), then its exclusive state comes on. Turns off on: two 
+ *  cases 1) [\n] newline (LN:) 2) <<EOF>> end-of-file (LN:)
+ * COMMENT_Type2: a comment of the type "(* ... *)". This type can be nested!
+ *  Starts on: "(*" with an increment of a counter: nestedCommentCounter, which
+ *  is used to keep track of how many "nestings" there are (LN:).
+ *  Accepts input: . anything but new line(LN:). "\n" a non escaped newline, increment
+ *  the line counter (curr_lineno) (LN:). 
+ *  Turns off on: 1) <<EOF>> end-of-line, returns ERROR (LN:). 2) "*"/")" star followed
+ *  by a right bracket (LN:), first we must check if there are any nested comments. In either 
+ *  case we must skip the next match (close bracket). In the nested case the nested counter
+ *  is decremented. There are two kinds of skips: SKIP and SKIP2, the reason for this is
+ *  SKIP2 goes into the COMMENT_Type2 state (since there was a nested comment) (LN:).
+ *  
+ */ 
 
 /*
  *  Stuff enclosed in %{ %} in the first section is copied verbatim to the
@@ -28,7 +43,6 @@ extern FILE *fin; /* we read from this file */
  * This change makes it possible to use this scanner in
  * the Cool compiler.
  */
- 
 #undef YY_INPUT
 #define YY_INPUT(buf,result,max_size) \
 	if ( (result = fread( (char*)buf, sizeof(char), max_size, fin)) < 0) \
@@ -108,6 +122,7 @@ z [zZ]
 {t}{h}{e}{n} { return THEN; }
 {e}{l}{s}{e} { return ELSE; }
 {f}{i} { return FI; }
+
 {w}{h}{i}{l}{e} { return WHILE; }
 {l}{o}{o}{p} { return LOOP; }
 {p}{o}{o}{l} { return POOL; }
@@ -186,12 +201,12 @@ f{a}{l}{s}{e}  { cool_yylval.boolean = 0; return BOOL_CONST; }
 } 
 <COMMENT_Type2>.         { ; }
 
-<STRING>\\[null char] {
+<STRING>\\[\0]         { 
     cool_yylval.error_msg = "String contains escaped null character.";
     bError = true;
     return ERROR;
 }
-<STRING>[null char]    {
+<STRING>[\0]           {
     cool_yylval.error_msg = "String contains null character.";
     bError = true;
     return ERROR;
@@ -216,7 +231,7 @@ f{a}{l}{s}{e}  { cool_yylval.boolean = 0; return BOOL_CONST; }
     { 
         cool_yylval.error_msg = "Unterminated string constant"; 
         curr_lineno++;
-		       strcpy(string_buf_ptr, ""); 
+        strcpy(string_buf_ptr, ""); 
         BEGIN(INITIAL); 
         return ERROR;
     }
@@ -246,7 +261,7 @@ f{a}{l}{s}{e}  { cool_yylval.boolean = 0; return BOOL_CONST; }
     }
     else if (bError)
     {
-	strcpy (string_buf_ptr, "");
+        strcpy (string_buf_ptr, "");
         strSize = 0;        
         BEGIN(INITIAL);
         bError = false;
@@ -274,8 +289,9 @@ f{a}{l}{s}{e}  { cool_yylval.boolean = 0; return BOOL_CONST; }
   * Keywords are case-insensitive except for the values true and false,
   * which must begin with a lower-case letter.
   */
-  
-   /*
+
+
+ /*
   *  String constants (C syntax)
   *  Escape sequence \c is accepted for all characters c. Except for 
   *  \n \t \b \f, the result is c.
