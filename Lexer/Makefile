@@ -1,7 +1,6 @@
 
 ASSN = 2
 CLASS= cs143
-# CLASSDIR= /usr/class/cs143/cool
 CLASSDIR= ./../
 LIB= -lfl
 
