@@ -1,33 +1,3 @@
-README file for Programming Assignment 4 (C++ edition)
-======================================================
-
-Your directory should now contain the following files:
-
- Makefile		-> [course dir]/assignments/PA4/Makefile
- README
- ast-lex.cc		-> [course dir]/src/PA4/ast-lex.cc
- ast-parse.cc		-> [course dir]/src/PA4/ast-parse.cc
- bad.cl
- cgen			-> [course dir]/etc/../lib/.i
- cool-tree.cc		-> [course dir]/src/PA4/cool-tree.cc
- cool-tree.h
- cool-tree.handcode.h
- dumptype.cc		-> [course dir]/src/PA4/dumptype.cc
- good.cl
- handle_flags.cc	-> [course dir]/src/PA4/handle_flags.cc
- mycoolc		-> [course dir]/src/PA4/mycoolc
- mysemant		-> [course dir]/src/PA4/mysemant
- semant-phase.cc	-> [course dir]/src/PA4/semant-phase.cc
- semant.cc
- semant.h
- stringtab.cc		-> [course dir]/src/PA4/stringtab.cc
- symtab_example.cc	-> [course dir]/src/PA4/symtab_example.cc
- tree.cc		-> [course dir]/src/PA4/tree.cc
- utilities.cc		-> [course dir]/src/PA4/utilities.cc
- *.d			  dependency files
-
-The include (.h) files for this assignment can be found in 
-[course dir]/include/PA4
 
 	The Makefile contains targets for compiling and running your
 	program. DO NOT MODIFY.
@@ -142,10 +112,4 @@ Instructions
 	below for instructions).  Remember if your lexer, parser or
 	checker behaves in an unexpected manner, you may get errors
 	anywhere.
-
-
-        Instructions for turning in the assignment will be posted on the
-        course web page.
-
-        GOOD LUCK!
 
